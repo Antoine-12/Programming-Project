@@ -19,13 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class NewUser extends javax.swing.JFrame {
 
+       private ToolBox tb = new ToolBox();
     /**
      * Creates new form newUser
      */
     public NewUser() { // this is the constructor 
         initComponents();
         setLocationRelativeTo(null);
-        ToolBox tb = new ToolBox();
         tb.readUserXML();
         jcombo();
     }
@@ -135,6 +135,7 @@ public class NewUser extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      
         nwUser();
+        tb.writeUsersBinary(); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void nwUser(){
@@ -198,7 +199,7 @@ public class NewUser extends javax.swing.JFrame {
         FileWriter folder = null;
                 PrintWriter write = null;
             try {
-                folder = new FileWriter("QueryCx.xml");
+                folder = new FileWriter("UserQuery.xml");
                 write = new PrintWriter(folder);
                 
                 write.println("<users>");

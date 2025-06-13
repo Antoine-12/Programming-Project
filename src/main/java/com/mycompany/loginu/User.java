@@ -1,15 +1,17 @@
-
 package com.mycompany.loginu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
-    
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String user;
     private String name;
     private String password;
     private int role;
-    
+
     public ArrayList<Address> address = new ArrayList<>();
 
     /**
@@ -67,6 +69,5 @@ public class User {
     public void setRole(int role) {
         this.role = role;
     }
-    
-    
+
 }

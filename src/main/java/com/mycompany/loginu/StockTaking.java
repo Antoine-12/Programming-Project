@@ -1,12 +1,15 @@
-
 package com.mycompany.loginu;
+
+import java.io.Serializable;
 
 /**
  *
  * @author osmar
  */
-public class StockTaking {
-    
+public class StockTaking implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String title;
     private double price;
     private int quantity;
@@ -86,8 +89,6 @@ public class StockTaking {
         this.customer = customer;
     }
 
-    
-
     public String getAddress() {
         return Address;
     }
@@ -135,5 +136,5 @@ public class StockTaking {
     public void setDiscType(String discType) {
         this.discType = discType;
     }
-    
+
 }

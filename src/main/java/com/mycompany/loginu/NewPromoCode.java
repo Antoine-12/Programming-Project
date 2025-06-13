@@ -1,4 +1,3 @@
-
 package com.mycompany.loginu;
 
 import java.io.FileWriter;
@@ -10,27 +9,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
-
 /**
  *
  * @author osmar
  */
 public class NewPromoCode extends javax.swing.JFrame {
-    
-   
+
+    private ToolBox tb = new ToolBox();
+
     /**
      * Creates new form NewPco
      */
     public NewPromoCode() {
         initComponents();
-        
+
         setComb();
-       setDt();
-                
+        setDt();
+
         setLocationRelativeTo(null);
-       
-                
+
     }
 
     /**
@@ -135,62 +132,62 @@ public class NewPromoCode extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       savePc();
+        savePc();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-     private void savePc(){
-         if (jTextField1.getText().isEmpty()||jTextField2.getText().isEmpty()||jTextField3.getText().isEmpty()||jComboBox1.getSelectedItem()==null) {
-                  JOptionPane.showMessageDialog(this, "We cannot process your request, some fields are still empty");   
-        }else{
-             
-        PromoCode pc = new PromoCode();
-        
-      pc.setpCode(jTextField1.getText());
-      pc.setValue(Math.round(Double.parseDouble(jTextField2.getText())));
-      pc.setDiscount(jComboBox1.getSelectedItem().toString());
-      pc.setCutoffDate(jTextField3.getText());
-      
-        ProjectU.prco.add(pc);
-        
-             try {
-                 FileWriter folder = new FileWriter("Pcodes.csv", true);
-                 PrintWriter wrt = new PrintWriter(folder);
-                 
-                 wrt.write(pc.getpCode()+"|"+pc.getValue()+"|"+pc.getDiscount()+"|"+pc.getCutoffDate()+"|"+"\n");
-                 
-                 wrt.close();
-                 folder.close();
-                 
-             } catch (IOException ex) {
-                 Logger.getLogger(NewPromoCode.class.getName()).log(Level.SEVERE, null, ex);
-             }
-        
-        
-        JOptionPane.showMessageDialog(this, "promotional code was successfully created ");
-        ToolBox.cleanjtxt(jTextField1, jTextField2);
-        jComboBox1.setSelectedIndex(-1);
-        setDt();
-         }
- 
+    private void savePc() {
+        if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty() || jComboBox1.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "We cannot process your request, some fields are still empty");
+        } else {
+
+            PromoCode pc = new PromoCode();
+
+            pc.setpCode(jTextField1.getText());
+            pc.setValue(Math.round(Double.parseDouble(jTextField2.getText())));
+            pc.setDiscount(jComboBox1.getSelectedItem().toString());
+            pc.setCutoffDate(jTextField3.getText());
+
+            ProjectU.prco.add(pc);
+
+            try {
+                FileWriter folder = new FileWriter("Pcodes.csv", true);
+                PrintWriter wrt = new PrintWriter(folder);
+
+                wrt.write(pc.getpCode() + "|" + pc.getValue() + "|" + pc.getDiscount() + "|" + pc.getCutoffDate() + "|" + "\n");
+
+                wrt.close();
+                folder.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(NewPromoCode.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            tb.writePromoCodesBinary();
+            JOptionPane.showMessageDialog(this, "promotional code was successfully created ");
+            ToolBox.cleanjtxt(jTextField1, jTextField2);
+            jComboBox1.setSelectedIndex(-1);
+            setDt();
+        }
+
     }
-    
-    private void setComb(){
+
+    private void setComb() {
         jComboBox1.removeAllItems();
         jComboBox1.addItem("Credit");
-        jComboBox1.addItem("Percentage");   
+        jComboBox1.addItem("Percentage");
     }
-    
-    private void setDt(){
+
+    private void setDt() {
         LocalDate date = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    String dt = date.format(formatter); 
-    jTextField3.setText(dt);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dt = date.format(formatter);
+        jTextField3.setText(dt);
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

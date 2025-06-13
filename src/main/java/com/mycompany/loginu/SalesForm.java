@@ -556,6 +556,7 @@ public class SalesForm extends javax.swing.JFrame {
         tbx.writeJsonBooks();
         tbx.writeCsvSalesRepo();
         tbx.writeCsvBookRepo();
+        tbx.writeSalesBinary();
         ProjectU.stockT.clear();
 
         jTextField9.setEnabled(true);

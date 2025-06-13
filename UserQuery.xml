@@ -29,4 +29,10 @@
 <password>Da1234</password>
 <role>2</role>
 </user>
+<user>
+<name>Osmar</name>
+<usr>O1</usr>
+<password>Oa1234</password>
+<role>2</role>
+</user>
 </users>

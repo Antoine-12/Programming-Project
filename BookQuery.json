@@ -21,7 +21,7 @@
             "title": "Sun and Moon"
       },
       {
-            "amount": 520,
+            "amount": 517,
             "author": "Dresden",
             "price": 45.67,
             "style": "Drama",
@@ -33,5 +33,12 @@
             "price": 34,
             "style": "Magic",
             "title": "Circle"
+      },
+      {
+            "amount": 432,
+            "author": "Above & Beyond",
+            "price": 54.32,
+            "style": "Science Fiction",
+            "title": "Heart of Stone"
       }
 ]

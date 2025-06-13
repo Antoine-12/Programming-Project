@@ -1,8 +1,11 @@
 package com.mycompany.loginu;
 
+import java.io.Serializable;
 
-public class PromoCode {
-    
+public class PromoCode implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String pCode;
     private double value;
     private String discount;
@@ -39,8 +42,5 @@ public class PromoCode {
     public void setCutoffDate(String cutoffDate) {
         this.cutoffDate = cutoffDate;
     }
-    
-    
-    
-    
+
 }

@@ -3,10 +3,15 @@ package com.mycompany.loginu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -22,7 +27,6 @@ import org.xml.sax.SAXException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 
 public class ToolBox {
 
@@ -93,28 +97,27 @@ public class ToolBox {
 
     public void readJsonBooks() {
 
-        try(FileReader read = new FileReader("BookQuery.json")){
-            
+        try (FileReader read = new FileReader("BookQuery.json")) {
+
             JSONTokener token = new JSONTokener(read);
             JSONArray bookList = new JSONArray(token);
-            
+
             ProjectU.books.clear();
-            
-            for (Object obj : bookList){
+
+            for (Object obj : bookList) {
                 JSONObject jsonBook = (JSONObject) obj;
-                
+
                 Book b = new Book();
 
-                    b.setAuthor((String) jsonBook.get("author"));
-                    b.setTitle((String) jsonBook.get("title"));
-                    b.setPrice((Double.parseDouble(jsonBook.get("price").toString())));
-                    b.setGenre((String) jsonBook.get("style"));
-                    b.setStockQuantity((Integer.parseInt(jsonBook.get("amount").toString())));
+                b.setAuthor((String) jsonBook.get("author"));
+                b.setTitle((String) jsonBook.get("title"));
+                b.setPrice((Double.parseDouble(jsonBook.get("price").toString())));
+                b.setGenre((String) jsonBook.get("style"));
+                b.setStockQuantity((Integer.parseInt(jsonBook.get("amount").toString())));
 
-                    ProjectU.books.add(b);
+                ProjectU.books.add(b);
             }
-            
-            
+
         } catch (IOException ex) {
             System.getLogger(ToolBox.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -126,7 +129,7 @@ public class ToolBox {
         JSONArray bookList = new JSONArray();
 
         for (Book bk : ProjectU.books) {
-           JSONObject bookObj = new JSONObject();
+            JSONObject bookObj = new JSONObject();
 
             bookObj.put("author", bk.getAuthor());
             bookObj.put("title", bk.getTitle());
@@ -151,7 +154,7 @@ public class ToolBox {
         try (BufferedWriter write = new BufferedWriter(new FileWriter("LoadSales.csv", true))) {
 
             for (StockTaking st : ProjectU.stockT) {
-                write.write(st.getSeller() + "," + st.getNoVat() + ", " + st.getTotal()+ ", "+ st.getDiscount() +","+st.getDiscType()+ ", " + st.getDate() 
+                write.write(st.getSeller() + "," + st.getNoVat() + ", " + st.getTotal() + ", " + st.getDiscount() + "," + st.getDiscType() + ", " + st.getDate()
                         + ", " + st.getCustomer() + ", " + st.getNIT() + ", " + st.getAddress() + "\n");
             }
 
@@ -167,13 +170,13 @@ public class ToolBox {
             String line;
 
             ProjectU.stockT.clear();
-            
+
             while ((line = read.readLine()) != null) {
                 String[] sl = line.split(",");
 
                 if (sl.length >= 9) {
                     StockTaking sk = new StockTaking();
-                    sk.setSeller(sl[0].trim());                  
+                    sk.setSeller(sl[0].trim());
                     sk.setNoVat(Double.parseDouble(sl[1].trim()));
                     sk.setTotal(Double.parseDouble(sl[2].trim()));
                     sk.setDiscount(Double.parseDouble(sl[3].trim()));
@@ -203,7 +206,7 @@ public class ToolBox {
 
         if (cxSelection == JFileChooser.APPROVE_OPTION) {
             File folder = choosefile.getSelectedFile();
-            
+
             BookReport.clear();
 
             try (BufferedReader read = new BufferedReader(new FileReader(folder))) {
@@ -245,6 +248,72 @@ public class ToolBox {
             System.getLogger(ToolBox.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
 
+    }
+
+    public void writeUsersBinary() {
+        try (FileOutputStream fos = new FileOutputStream("users.dat"); 
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(ProjectU.users);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ToolBox.class.getName())
+                    .log(Level.SEVERE, "Error writing users.dat", ex);
+        }
+    }
+
+    public void readUsersBinary() {
+        try (FileInputStream fis = new FileInputStream("users.dat"); 
+                ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            List<User> loaded = (List<User>) ois.readObject();
+            ProjectU.users.clear();
+            ProjectU.users.addAll(loaded);
+
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+
+    public void writeBooksBinary() {
+        try (FileOutputStream fos = new FileOutputStream("books.dat"); 
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(ProjectU.books);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ToolBox.class.getName())
+                    .log(Level.SEVERE, "Error writing books.dat", ex);
+        }
+    }
+
+    public void writePromoCodesBinary() {
+        try (FileOutputStream fos = new FileOutputStream("promocodes.dat"); 
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(ProjectU.prco);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ToolBox.class.getName())
+                    .log(Level.SEVERE, "Error writing promocodes.dat", ex);
+        }
+    }
+
+    public void readPromoCodesBinary() {
+        try (FileInputStream fis = new FileInputStream("promocodes.dat"); 
+                ObjectInputStream ois = new ObjectInputStream(fis)) {
+            List<PromoCode> loaded = (List<PromoCode>) ois.readObject();
+            ProjectU.prco.clear();
+            ProjectU.prco.addAll(loaded);
+        } catch (IOException | ClassNotFoundException ex) {
+        }
+    }
+    
+    public void writeSalesBinary() {
+        try (FileOutputStream fos = new FileOutputStream("sales.dat");
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(ProjectU.stockT);  
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ToolBox.class.getName())
+                  .log(Level.SEVERE, "Error writing sales.dat", ex);
+        }
     }
 
 }

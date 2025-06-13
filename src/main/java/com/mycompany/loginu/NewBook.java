@@ -1,7 +1,7 @@
 package com.mycompany.loginu;
 
-
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author osmar
@@ -164,13 +164,12 @@ public class NewBook extends javax.swing.JFrame {
 
             ProjectU.books.add(bk);
             tbx.writeJsonBooks();
+            tbx.writeBooksBinary();
 
             JOptionPane.showMessageDialog(this, "your request was successfully completed");
             ToolBox.cleanjtxt(jTextField1, jTextField2, jTextField3, jTextField4, jTextField5);
         }
     }
-
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
