@@ -1,0 +1,37 @@
+[
+      {
+            "amount": 475,
+            "author": "Above and beyod",
+            "price": 23.24,
+            "style": "Magic",
+            "title": "Nothern soul"
+      },
+      {
+            "amount": 397,
+            "author": "ABGT",
+            "price": 12.45,
+            "style": "poethic",
+            "title": "Called thing love"
+      },
+      {
+            "amount": 326,
+            "author": "Cosmi Gate",
+            "price": 47.33,
+            "style": "Realism",
+            "title": "Sun and Moon"
+      },
+      {
+            "amount": 520,
+            "author": "Dresden",
+            "price": 45.67,
+            "style": "Drama",
+            "title": "Keep on holding"
+      },
+      {
+            "amount": 324,
+            "author": "post malone",
+            "price": 34,
+            "style": "Magic",
+            "title": "Circle"
+      }
+]
